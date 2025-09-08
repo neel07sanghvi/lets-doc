@@ -83,6 +83,7 @@ export interface SiteData {
   };
   bookingForm: {
     type: 'simple' | 'detailed' | 'none';
+    availableDoctors?: string[];
   };
   footer: {
     about: string;

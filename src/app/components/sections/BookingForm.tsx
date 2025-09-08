@@ -1,0 +1,154 @@
+"use client";
+
+import { SiteData } from "@/types";
+import { useState, useMemo } from "react";
+
+// Main component props
+type BookingFormProps = {
+  data: SiteData['bookingForm'];
+  siteName: string;
+};
+
+// --- Multi-Step Form Component (The new "Simple" form) ---
+const MultiStepForm = ({ availableDoctors }: { availableDoctors: string[] }) => {
+  const [step, setStep] = useState({
+    doctor: null as string | null,
+    date: null as string | null,
+    period: 'Morning' as 'Morning' | 'Evening',
+    slot: null as string | null,
+  });
+  const [userDetails, setUserDetails] = useState({ name: '', mobile: '', email: '' });
+
+  // Mock availability data - in a real app, this would come from a database
+  const morningSlots = [{ time: '9:00 AM', status: 'Available' }, { time: '9:30 AM', status: 'Available' }, { time: '10:00 AM', status: 'Booked' }, { time: '10:30 AM', status: 'Available' }, { time: '11:00 AM', status: 'Available' }, { time: '11:30 AM', status: 'Booked' }];
+  const eveningSlots = [{ time: '4:00 PM', status: 'Available' }, { time: '4:30 PM', status: 'Booked' }, { time: '5:00 PM', status: 'Available' }, { time: '5:30 PM', status: 'Available' }];
+
+  const slotsToShow = useMemo(() => {
+    if (!step.date) return [];
+    return step.period === 'Morning' ? morningSlots : eveningSlots;
+  }, [step.date, step.period]);
+
+  const handleUserDetailsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserDetails(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = () => {
+    if (!step.doctor || !step.date || !step.slot || !userDetails.name || !userDetails.mobile) {
+      alert('Please fill in all required fields.');
+      return;
+    }
+    const finalAppointment = { ...step, ...userDetails };
+    console.log('CONFIRMING APPOINTMENT:', finalAppointment);
+    alert(`Appointment confirmed for ${userDetails.name} with ${step.doctor} on ${step.date} at ${step.slot}.`);
+  };
+
+  return (
+    <div className="bg-white p-8 rounded-lg shadow-lg max-w-3xl mx-auto space-y-6">
+      {/* Step 1: Select Doctor */}
+      <div>
+        <h3 className="font-semibold text-secondary">Select Your Doctor</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2">
+          {availableDoctors.map(doctor => (
+            <button key={doctor} onClick={() => setStep({ ...step, doctor, date: null, slot: null })} className={`p-4 text-left rounded-lg border-2 transition-all ${step.doctor === doctor ? 'bg-primary/10 border-primary' : 'bg-white border-slate-200 hover:border-primary/50'}`}>
+              <p className="font-semibold text-secondary">{doctor.split('(')[0]}</p>
+              <p className="text-sm text-text-secondary">{doctor.split('(')[1].replace(')', '')}</p>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Step 2: Choose Date (appears after doctor is selected) */}
+      {step.doctor && (
+        <div className="border-t pt-6">
+          <h3 className="font-semibold text-secondary">Choose Date</h3>
+          <input type="date" onChange={(e) => setStep({ ...step, date: e.target.value, slot: null })} className="w-full mt-2 p-3 border border-slate-300 rounded-lg" />
+        </div>
+      )}
+
+      {/* Step 3 & 4: Choose Period & Slot (appears after date is selected) */}
+      {step.date && (
+        <div className="border-t pt-6">
+          {/* Period Tabs */}
+          <div className="flex border border-slate-300 rounded-lg p-1 bg-slate-100 mb-4">
+            <button onClick={() => setStep({ ...step, period: 'Morning' })} className={`flex-1 p-2 rounded-md transition-colors ${step.period === 'Morning' ? 'bg-primary text-white shadow' : 'hover:bg-slate-200'}`}>Morning</button>
+            <button onClick={() => setStep({ ...step, period: 'Evening' })} className={`flex-1 p-2 rounded-md transition-colors ${step.period === 'Evening' ? 'bg-primary text-white shadow' : 'hover:bg-slate-200'}`}>Evening</button>
+          </div>
+          {/* Slot Grid */}
+          <h3 className="font-semibold text-secondary mb-2">Select Slot - <span className="text-sm font-normal">{step.period}</span></h3>
+          <div className="grid grid-cols-3 md:grid-cols-4 gap-3">
+            {slotsToShow.map(slot => (
+              <button key={slot.time} onClick={() => setStep({ ...step, slot: slot.time })} disabled={slot.status === 'Booked'} className={`p-3 text-center rounded-lg border-2 text-sm transition-all disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed ${step.slot === slot.time ? 'bg-primary/10 border-primary' : 'bg-white border-slate-200 hover:border-primary/50'}`}>
+                {slot.time}
+                <span className={`block text-xs mt-1 ${slot.status === 'Available' ? 'text-green-500' : 'text-red-500'}`}>{slot.status}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Step 5: User Details (appears after slot is selected) */}
+      {step.slot && (
+        <div className="border-t pt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input type="text" name="name" placeholder="Full Name" onChange={handleUserDetailsChange} className="w-full p-3 border border-slate-300 rounded-lg" required />
+          <input type="tel" name="mobile" placeholder="Mobile Number" onChange={handleUserDetailsChange} className="w-full p-3 border border-slate-300 rounded-lg" required />
+          <input type="email" name="email" placeholder="Email Address (Optional)" onChange={handleUserDetailsChange} className="w-full p-3 border border-slate-300 rounded-lg md:col-span-2" />
+        </div>
+      )}
+
+      {/* Final Submit Button */}
+      <button onClick={handleSubmit} disabled={!step.slot || !userDetails.name || !userDetails.mobile} className="w-full mt-4 bg-primary text-white font-bold py-3 px-6 rounded-lg hover:bg-primary/90 transition-colors disabled:bg-slate-300 disabled:cursor-not-allowed">
+        Confirm Appointment
+      </button>
+    </div>
+  );
+};
+
+
+// --- Detailed Form Component (Unchanged) ---
+const DetailedForm = () => {
+  // ... (The code for DetailedForm remains exactly the same as before)
+  const [formData, setFormData] = useState({ doctor: '', date: '', time: '', name: '', mobile: '', email: '' });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => { const { name, value } = e.target; setFormData(prevState => ({ ...prevState, [name]: value })); };
+  const handleSubmit = (e: React.FormEvent) => { e.preventDefault(); if (!formData.time) { alert('Please select a time slot.'); return; } console.log('SUBMITTING APPOINTMENT:', formData); alert(`Thank you, ${formData.name}! Your appointment request has been sent.`); };
+  const timeSlots = ['09:00 AM', '10:00 AM', '11:00 AM', '02:00 PM', '03:00 PM', '04:00 PM'];
+  return (
+    <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg max-w-3xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <input type="text" name="name" placeholder="Full Name" onChange={handleChange} className="w-full p-3 border border-slate-300 rounded-lg" required />
+        <input type="tel" name="mobile" placeholder="Mobile Number" onChange={handleChange} className="w-full p-3 border border-slate-300 rounded-lg" required />
+        <input type="email" name="email" placeholder="Email Address (Optional)" onChange={handleChange} className="w-full p-3 border border-slate-300 rounded-lg" />
+        <select name="doctor" onChange={handleChange} className="w-full p-3 border border-slate-300 rounded-lg" required>
+          <option value="">Choose your preferred doctor</option><option>Dr. Anish Kumar</option><option>Dr. Anurag Aggarwal</option>
+        </select>
+        <input type="date" name="date" onChange={handleChange} className="w-full p-3 border border-slate-300 rounded-lg" required />
+      </div>
+      <div className="mt-6">
+        <h4 className="font-semibold text-secondary mb-3">Select Time</h4>
+        <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+          {timeSlots.map(time => (<button key={time} type="button" onClick={() => setFormData(prev => ({ ...prev, time }))} className={`p-3 rounded-lg border-2 text-sm ${formData.time === time ? 'bg-primary/10 border-primary' : 'bg-slate-50 border-slate-200 hover:border-primary/50'}`}>{time}</button>))}
+        </div>
+      </div>
+      <button type="submit" className="w-full mt-8 bg-primary text-white font-bold py-3 px-6 rounded-lg hover:bg-primary/90 transition-colors">Book Appointment</button>
+    </form>
+  );
+};
+
+
+// --- Main Router Component (Updated to call MultiStepForm) ---
+export default function BookingForm({ data, siteName }: BookingFormProps) {
+  if (data.type === 'none') return null;
+
+  return (
+    <section className="bg-slate-50 py-16 md:py-24">
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-secondary">Book Your Appointment</h2>
+          <p className="mt-4 text-lg text-text-secondary">Schedule your visit with our expert dentists at {siteName}.</p>
+        </div>
+        {/* The important change is here 👇 */}
+        {data.type === 'simple' && data.availableDoctors && <MultiStepForm availableDoctors={data.availableDoctors} />}
+        {data.type === 'detailed' && <DetailedForm />}
+      </div>
+    </section>
+  );
+}

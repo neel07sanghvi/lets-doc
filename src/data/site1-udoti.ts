@@ -24,7 +24,7 @@ export const udotiData: SiteData = {
   hero: {
     title: 'Comprehensive digital transformation for your healthcare practice',
     subtitle: 'The Udeti Solution',
-    image: '/images/udoti/hero.jpg', // You will need to add this image
+    image: '/images/udoti/hero.jpg',
   },
   metrics: [
     { value: '20%-40%', label: 'Revenue Growth for Clinics' },

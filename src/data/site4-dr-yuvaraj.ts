@@ -89,6 +89,7 @@ export const drYuvarajData: SiteData = {
   },
   bookingForm: {
     type: 'simple',
+    availableDoctors: ['Dr. Yuvaraj (General Medicine)', 'Dr. Priya Sharma (Orthodontics)', 'Dr. Rajesh Kumar (Oral Surgery)'],
   },
   footer: {
     about: 'Committed to providing exceptional healthcare with compassion, expertise, and cutting-edge technology. Your health is our priority, and your comfort is our commitment.',
