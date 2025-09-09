@@ -9,7 +9,7 @@ type BookingFormProps = {
   siteName: string;
 };
 
-// --- Multi-Step Form Component (The new "Simple" form) ---
+// --- Multi-Step Form Component (The "Simple" form) ---
 const MultiStepForm = ({ availableDoctors }: { availableDoctors: string[] }) => {
   const [step, setStep] = useState({
     doctor: null as string | null,
@@ -20,13 +20,25 @@ const MultiStepForm = ({ availableDoctors }: { availableDoctors: string[] }) => 
   const [userDetails, setUserDetails] = useState({ name: '', mobile: '', email: '' });
 
   // Mock availability data - in a real app, this would come from a database
-  const morningSlots = [{ time: '9:00 AM', status: 'Available' }, { time: '9:30 AM', status: 'Available' }, { time: '10:00 AM', status: 'Booked' }, { time: '10:30 AM', status: 'Available' }, { time: '11:00 AM', status: 'Available' }, { time: '11:30 AM', status: 'Booked' }];
-  const eveningSlots = [{ time: '4:00 PM', status: 'Available' }, { time: '4:30 PM', status: 'Booked' }, { time: '5:00 PM', status: 'Available' }, { time: '5:30 PM', status: 'Available' }];
+  const morningSlots = [
+    { time: '9:00 AM', status: 'Available' },
+    { time: '9:30 AM', status: 'Available' },
+    { time: '10:00 AM', status: 'Booked' },
+    { time: '10:30 AM', status: 'Available' },
+    { time: '11:00 AM', status: 'Available' },
+    { time: '11:30 AM', status: 'Booked' }
+  ];
+  const eveningSlots = [
+    { time: '4:00 PM', status: 'Available' },
+    { time: '4:30 PM', status: 'Booked' },
+    { time: '5:00 PM', status: 'Available' },
+    { time: '5:30 PM', status: 'Available' }
+  ];
 
   const slotsToShow = useMemo(() => {
     if (!step.date) return [];
     return step.period === 'Morning' ? morningSlots : eveningSlots;
-  }, [step.date, step.period, morningSlots, eveningSlots]);
+  }, [step.date, step.period]);
 
   const handleUserDetailsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserDetails(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -43,20 +55,21 @@ const MultiStepForm = ({ availableDoctors }: { availableDoctors: string[] }) => 
   };
 
   return (
-    <div className="bg-white p-8 rounded-lg shadow-lg max-w-3xl mx-auto space-y-6">
+    <div className="bg-white p-4 sm:p-6 lg:p-8 rounded-xl shadow-lg max-w-4xl mx-auto space-y-6 sm:space-y-8">
       {/* Step 1: Select Doctor */}
       <div>
-        <h3 className="font-semibold text-lg mb-4" style={{ color: 'var(--secondary-color)' }}>
+        <h3
+          className="font-semibold text-lg sm:text-xl lg:text-2xl mb-4 sm:mb-6"
+          style={{ color: 'var(--secondary-color)' }}
+        >
           Select Your Doctor
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {availableDoctors.map(doctor => (
             <button
               key={doctor}
               onClick={() => setStep({ ...step, doctor, date: null, slot: null })}
-              className={`p-4 text-left rounded-lg border-2 transition-all ${step.doctor === doctor
-                ? 'border-2'
-                : 'bg-white border-slate-200 hover:border-opacity-50'
+              className={`p-3 sm:p-4 text-left rounded-lg border-2 transition-all ${step.doctor === doctor ? 'border-2' : 'bg-white border-slate-200 hover:border-opacity-50'
                 }`}
               style={{
                 backgroundColor: step.doctor === doctor ? 'var(--primary-color)' + '10' : 'white',
@@ -64,10 +77,16 @@ const MultiStepForm = ({ availableDoctors }: { availableDoctors: string[] }) => 
                 color: step.doctor === doctor ? 'var(--primary-color)' : 'var(--text-color)'
               }}
             >
-              <p className="font-semibold" style={{ color: 'var(--secondary-color)' }}>
+              <p
+                className="font-semibold text-sm sm:text-base"
+                style={{ color: 'var(--secondary-color)' }}
+              >
                 {doctor.split('(')[0]}
               </p>
-              <p className="text-sm" style={{ color: 'var(--text-secondary-color)' }}>
+              <p
+                className="text-xs sm:text-sm mt-1"
+                style={{ color: 'var(--text-secondary-color)' }}
+              >
                 {doctor.split('(')[1].replace(')', '')}
               </p>
             </button>
@@ -77,29 +96,31 @@ const MultiStepForm = ({ availableDoctors }: { availableDoctors: string[] }) => 
 
       {/* Step 2: Choose Date (appears after doctor is selected) */}
       {step.doctor && (
-        <div className="border-t pt-6">
-          <h3 className="font-semibold text-lg mb-4" style={{ color: 'var(--secondary-color)' }}>
+        <div className="border-t pt-6 sm:pt-8" style={{ borderColor: 'var(--text-secondary-color)' }}>
+          <h3
+            className="font-semibold text-lg sm:text-xl lg:text-2xl mb-4 sm:mb-6"
+            style={{ color: 'var(--secondary-color)' }}
+          >
             Choose Date
           </h3>
           <input
             type="date"
+            min={new Date().toISOString().split('T')[0]}
             onChange={(e) => setStep({ ...step, date: e.target.value, slot: null })}
-            className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:border-transparent"
-            style={{
-              color: 'var(--text-color)',
-            }}
+            className="w-full sm:w-auto p-3 sm:p-4 border border-slate-300 rounded-lg focus:ring-2 focus:border-transparent text-sm sm:text-base"
+            style={{ color: 'var(--text-color)' }}
           />
         </div>
       )}
 
       {/* Step 3 & 4: Choose Period & Slot (appears after date is selected) */}
       {step.date && (
-        <div className="border-t pt-6">
+        <div className="border-t pt-6 sm:pt-8" style={{ borderColor: 'var(--text-secondary-color)' }}>
           {/* Period Tabs */}
-          <div className="flex border border-slate-300 rounded-lg p-1 bg-slate-100 mb-4">
+          <div className="flex border border-slate-300 rounded-lg p-1 bg-slate-100 mb-4 sm:mb-6 max-w-md">
             <button
               onClick={() => setStep({ ...step, period: 'Morning' })}
-              className={`flex-1 p-2 rounded-md transition-colors ${step.period === 'Morning' ? 'text-white shadow' : 'hover:bg-slate-200'
+              className={`flex-1 p-2 sm:p-3 rounded-md transition-colors text-sm sm:text-base ${step.period === 'Morning' ? 'text-white shadow' : 'hover:bg-slate-200'
                 }`}
               style={{
                 backgroundColor: step.period === 'Morning' ? 'var(--primary-color)' : 'transparent',
@@ -110,7 +131,7 @@ const MultiStepForm = ({ availableDoctors }: { availableDoctors: string[] }) => 
             </button>
             <button
               onClick={() => setStep({ ...step, period: 'Evening' })}
-              className={`flex-1 p-2 rounded-md transition-colors ${step.period === 'Evening' ? 'text-white shadow' : 'hover:bg-slate-200'
+              className={`flex-1 p-2 sm:p-3 rounded-md transition-colors text-sm sm:text-base ${step.period === 'Evening' ? 'text-white shadow' : 'hover:bg-slate-200'
                 }`}
               style={{
                 backgroundColor: step.period === 'Evening' ? 'var(--primary-color)' : 'transparent',
@@ -122,18 +143,19 @@ const MultiStepForm = ({ availableDoctors }: { availableDoctors: string[] }) => 
           </div>
 
           {/* Slot Grid */}
-          <h3 className="font-semibold mb-2" style={{ color: 'var(--secondary-color)' }}>
+          <h3
+            className="font-semibold mb-3 sm:mb-4 text-base sm:text-lg"
+            style={{ color: 'var(--secondary-color)' }}
+          >
             Select Slot - <span className="text-sm font-normal">{step.period}</span>
           </h3>
-          <div className="grid grid-cols-3 md:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3">
             {slotsToShow.map(slot => (
               <button
                 key={slot.time}
                 onClick={() => setStep({ ...step, slot: slot.time })}
                 disabled={slot.status === 'Booked'}
-                className={`p-3 text-center rounded-lg border-2 text-sm transition-all disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed ${step.slot === slot.time
-                  ? 'border-2'
-                  : 'bg-white border-slate-200'
+                className={`p-2 sm:p-3 text-center rounded-lg border-2 text-xs sm:text-sm transition-all disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed ${step.slot === slot.time ? 'border-2' : 'bg-white border-slate-200'
                   }`}
                 style={{
                   backgroundColor: step.slot === slot.time ? 'var(--primary-color)' + '10' : 'white',
@@ -154,53 +176,54 @@ const MultiStepForm = ({ availableDoctors }: { availableDoctors: string[] }) => 
 
       {/* Step 5: User Details (appears after slot is selected) */}
       {step.slot && (
-        <div className="border-t pt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input
-            type="text"
-            name="name"
-            placeholder="Full Name"
-            onChange={handleUserDetailsChange}
-            className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:border-transparent"
-            style={{
-              color: 'var(--text-color)',
-            }}
-            required
-          />
-          <input
-            type="tel"
-            name="mobile"
-            placeholder="Mobile Number"
-            onChange={handleUserDetailsChange}
-            className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:border-transparent"
-            style={{
-              color: 'var(--text-color)',
-            }}
-            required
-          />
+        <div className="border-t pt-6 sm:pt-8 space-y-4" style={{ borderColor: 'var(--text-secondary-color)' }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <input
+              type="text"
+              name="name"
+              placeholder="Full Name *"
+              value={userDetails.name}
+              onChange={handleUserDetailsChange}
+              className="w-full p-3 sm:p-4 border border-slate-300 rounded-lg focus:ring-2 focus:border-transparent text-sm sm:text-base"
+              style={{ color: 'var(--text-color)' }}
+              required
+            />
+            <input
+              type="tel"
+              name="mobile"
+              placeholder="Mobile Number *"
+              value={userDetails.mobile}
+              onChange={handleUserDetailsChange}
+              className="w-full p-3 sm:p-4 border border-slate-300 rounded-lg focus:ring-2 focus:border-transparent text-sm sm:text-base"
+              style={{ color: 'var(--text-color)' }}
+              required
+            />
+          </div>
           <input
             type="email"
             name="email"
             placeholder="Email Address (Optional)"
+            value={userDetails.email}
             onChange={handleUserDetailsChange}
-            className="w-full p-3 border border-slate-300 rounded-lg md:col-span-2 focus:ring-2 focus:border-transparent"
-            style={{
-              color: 'var(--text-color)',
-            }}
+            className="w-full p-3 sm:p-4 border border-slate-300 rounded-lg focus:ring-2 focus:border-transparent text-sm sm:text-base"
+            style={{ color: 'var(--text-color)' }}
           />
         </div>
       )}
 
       {/* Final Submit Button */}
-      <button
-        onClick={handleSubmit}
-        disabled={!step.slot || !userDetails.name || !userDetails.mobile}
-        className="w-full mt-4 text-white font-bold py-3 px-6 rounded-lg hover:opacity-90 transition-opacity disabled:bg-slate-300 disabled:cursor-not-allowed"
-        style={{
-          backgroundColor: (!step.slot || !userDetails.name || !userDetails.mobile) ? '#cbd5e1' : 'var(--primary-color)'
-        }}
-      >
-        Confirm Appointment
-      </button>
+      {step.slot && (
+        <button
+          onClick={handleSubmit}
+          disabled={!step.slot || !userDetails.name || !userDetails.mobile}
+          className="w-full mt-6 sm:mt-8 text-white font-bold py-3 sm:py-4 px-6 rounded-lg hover:opacity-90 transition-opacity disabled:bg-slate-300 disabled:cursor-not-allowed text-sm sm:text-base lg:text-lg"
+          style={{
+            backgroundColor: (!step.slot || !userDetails.name || !userDetails.mobile) ? '#cbd5e1' : 'var(--primary-color)'
+          }}
+        >
+          Confirm Appointment
+        </button>
+      )}
     </div>
   );
 };
@@ -234,47 +257,43 @@ const DetailedForm = () => {
   const timeSlots = ['09:00 AM', '10:00 AM', '11:00 AM', '02:00 PM', '03:00 PM', '04:00 PM'];
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg max-w-3xl mx-auto">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <form onSubmit={handleSubmit} className="bg-white p-4 sm:p-6 lg:p-8 rounded-xl shadow-lg max-w-4xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
         <input
           type="text"
           name="name"
-          placeholder="Full Name"
+          placeholder="Full Name *"
+          value={formData.name}
           onChange={handleChange}
-          className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:border-transparent"
-          style={{
-            color: 'var(--text-color)',
-          }}
+          className="w-full p-3 sm:p-4 border border-slate-300 rounded-lg focus:ring-2 focus:border-transparent text-sm sm:text-base"
+          style={{ color: 'var(--text-color)' }}
           required
         />
         <input
           type="tel"
           name="mobile"
-          placeholder="Mobile Number"
+          placeholder="Mobile Number *"
+          value={formData.mobile}
           onChange={handleChange}
-          className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:border-transparent"
-          style={{
-            color: 'var(--text-color)',
-          }}
+          className="w-full p-3 sm:p-4 border border-slate-300 rounded-lg focus:ring-2 focus:border-transparent text-sm sm:text-base"
+          style={{ color: 'var(--text-color)' }}
           required
         />
         <input
           type="email"
           name="email"
           placeholder="Email Address (Optional)"
+          value={formData.email}
           onChange={handleChange}
-          className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:border-transparent"
-          style={{
-            color: 'var(--text-color)',
-          }}
+          className="w-full p-3 sm:p-4 border border-slate-300 rounded-lg focus:ring-2 focus:border-transparent text-sm sm:text-base"
+          style={{ color: 'var(--text-color)' }}
         />
         <select
           name="doctor"
+          value={formData.doctor}
           onChange={handleChange}
-          className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:border-transparent"
-          style={{
-            color: 'var(--text-color)',
-          }}
+          className="w-full p-3 sm:p-4 border border-slate-300 rounded-lg focus:ring-2 focus:border-transparent text-sm sm:text-base"
+          style={{ color: 'var(--text-color)' }}
           required
         >
           <option value="">Choose your preferred doctor</option>
@@ -284,28 +303,29 @@ const DetailedForm = () => {
         <input
           type="date"
           name="date"
+          value={formData.date}
+          min={new Date().toISOString().split('T')[0]}
           onChange={handleChange}
-          className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:border-transparent"
-          style={{
-            color: 'var(--text-color)',
-          }}
+          className="w-full p-3 sm:p-4 border border-slate-300 rounded-lg focus:ring-2 focus:border-transparent text-sm sm:text-base sm:col-span-2 lg:col-span-1"
+          style={{ color: 'var(--text-color)' }}
           required
         />
       </div>
 
-      <div className="mt-6">
-        <h4 className="font-semibold mb-3" style={{ color: 'var(--secondary-color)' }}>
+      <div className="mb-6 sm:mb-8">
+        <h4
+          className="font-semibold mb-3 sm:mb-4 text-base sm:text-lg"
+          style={{ color: 'var(--secondary-color)' }}
+        >
           Select Time
         </h4>
-        <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
           {timeSlots.map(time => (
             <button
               key={time}
               type="button"
               onClick={() => setFormData(prev => ({ ...prev, time }))}
-              className={`p-3 rounded-lg border-2 text-sm transition-all ${formData.time === time
-                ? 'border-2'
-                : 'bg-slate-50 border-slate-200'
+              className={`p-2 sm:p-3 rounded-lg border-2 text-xs sm:text-sm transition-all ${formData.time === time ? 'border-2' : 'bg-slate-50 border-slate-200'
                 }`}
               style={{
                 backgroundColor: formData.time === time ? 'var(--primary-color)' + '10' : '#f8fafc',
@@ -321,7 +341,7 @@ const DetailedForm = () => {
 
       <button
         type="submit"
-        className="w-full mt-8 text-white font-bold py-3 px-6 rounded-lg hover:opacity-90 transition-opacity"
+        className="w-full text-white font-bold py-3 sm:py-4 px-6 rounded-lg hover:opacity-90 transition-opacity text-sm sm:text-base lg:text-lg"
         style={{ backgroundColor: 'var(--primary-color)' }}
       >
         Book Appointment
@@ -335,14 +355,24 @@ export default function BookingForm({ data, siteName }: BookingFormProps) {
   if (data.type === 'none') return null;
 
   return (
-    <section id="appointment" className="bg-slate-50 py-16 md:py-24">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold" style={{ color: 'var(--secondary-color)' }}>
+    <section
+      id="appointment"
+      className="py-12 sm:py-16 md:py-20 lg:py-24"
+      style={{ backgroundColor: '#f8fafc' }}
+    >
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+          <h2
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6"
+            style={{ color: 'var(--secondary-color)' }}
+          >
             Book Your Appointment
           </h2>
-          <p className="mt-4 text-lg" style={{ color: 'var(--text-secondary-color)' }}>
-            Schedule your visit with our expert dentists at {siteName}.
+          <p
+            className="text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl mx-auto"
+            style={{ color: 'var(--text-secondary-color)' }}
+          >
+            Schedule your visit with our expert doctors at {siteName}.
           </p>
         </div>
 

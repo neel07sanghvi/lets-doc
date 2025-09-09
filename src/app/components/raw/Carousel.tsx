@@ -53,7 +53,10 @@ export default function Carousel({
   return (
     <div className={`relative w-full ${className}`}>
       {title && (
-        <h3 className="text-2xl font-bold text-center mb-6" style={{ color: 'var(--secondary-color)' }}>
+        <h3
+          className="text-xl sm:text-2xl lg:text-3xl font-bold text-center mb-4 sm:mb-6"
+          style={{ color: 'var(--secondary-color)' }}
+        >
           {title}
         </h3>
       )}
@@ -65,11 +68,15 @@ export default function Carousel({
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
           {images.map((image, index) => (
-            <div key={index} className="w-full flex-shrink-0 relative h-50 md:h-80 lg:h-96">
+            <div
+              key={index}
+              className="w-full flex-shrink-0 relative h-48 sm:h-64 md:h-80 lg:h-96 xl:h-[28rem]"
+            >
               <Image
                 src={image}
                 fill
                 alt={`Slide ${index + 1}`}
+                className="object-cover"
                 priority={index === 0}
               />
             </div>
@@ -81,19 +88,19 @@ export default function Carousel({
           <>
             <button
               onClick={goToPrevious}
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-200"
+              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-1.5 sm:p-2 rounded-full transition-all duration-200 z-10"
               aria-label="Previous slide"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
             <button
               onClick={goToNext}
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-200"
+              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-1.5 sm:p-2 rounded-full transition-all duration-200 z-10"
               aria-label="Next slide"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </button>
@@ -102,14 +109,14 @@ export default function Carousel({
 
         {/* Dots indicator */}
         {showDots && images.length > 1 && (
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
+          <div className="absolute bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 flex space-x-1 sm:space-x-2">
             {images.map((_, index) => (
               <button
                 key={index}
                 onClick={() => goToSlide(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-200 ${index === currentIndex
-                  ? 'bg-white scale-110'
-                  : 'bg-white/50 hover:bg-white/75'
+                className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-200 ${index === currentIndex
+                    ? 'bg-white scale-110'
+                    : 'bg-white/50 hover:bg-white/75'
                   }`}
                 aria-label={`Go to slide ${index + 1}`}
               />

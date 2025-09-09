@@ -1,5 +1,3 @@
-// src/components/sections/Metrics.tsx
-
 import { SiteData } from "@/types";
 
 type MetricsProps = {
@@ -13,15 +11,21 @@ export default function Metrics({ data }: MetricsProps) {
   }
 
   return (
-    <section className="bg-slate-50">
-      <div className="container mx-auto px-6 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          {data.map((metric) => (
-            <div key={metric.label}>
-              <p className="text-4xl lg:text-5xl font-bold text-primary">
+    <section className="py-8 sm:py-12 lg:py-16" style={{ backgroundColor: '#f8fafc' }}>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 text-center">
+          {data.map((metric, index) => (
+            <div key={index} className="flex flex-col items-center">
+              <p
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-1 sm:mb-2"
+                style={{ color: 'var(--primary-color)' }}
+              >
                 {metric.value}
               </p>
-              <p className="mt-2 text-sm lg:text-base text-text-secondary">
+              <p
+                className="text-xs sm:text-sm md:text-base lg:text-lg leading-tight"
+                style={{ color: 'var(--text-secondary-color)' }}
+              >
                 {metric.label}
               </p>
             </div>
