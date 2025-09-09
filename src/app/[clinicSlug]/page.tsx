@@ -20,7 +20,7 @@ type ClinicPageProps = {
 };
 
 export async function generateMetadata({ params }: ClinicPageProps): Promise<Metadata> {
-  const { clinicSlug } = params;
+  const { clinicSlug } = await params;
   const siteData = allSitesData[clinicSlug as SiteSlug];
 
   if (!siteData) {
@@ -42,8 +42,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function ClinicPage({ params }: ClinicPageProps) {
-  const { clinicSlug } = params;
+export default async function ClinicPage({ params }: ClinicPageProps) {
+  const { clinicSlug } = await params;
 
   const isValidSlug = Object.keys(allSitesData).includes(clinicSlug);
   if (!isValidSlug) {
@@ -79,33 +79,48 @@ export default function ClinicPage({ params }: ClinicPageProps) {
         {/* Contact Form Section */}
         <ContactFormSection />
 
-        {/* Metrics */}
-        {siteData.metrics &&
-          <div id="about" className="container mx-auto px-6 py-12">
-            <div className="flex items-center">
-              <div>
-                <p className="text-3xl font-bold py-8">Transform Your Clinic with Udeti</p>
-                <p className="text-xl py-6">
+        <div id="about" className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+          {/* About Content Section */}
+          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 xl:gap-16 mb-12 sm:mb-16 lg:mb-20">
+            {/* Text Content */}
+            <div className="flex-1 order-2 lg:order-1">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-6 sm:mb-8 lg:mb-10">
+                Transform Your Clinic with Udeti
+              </h2>
+              <div className="space-y-4 sm:space-y-6 lg:space-y-8">
+                <p className="text-base sm:text-lg lg:text-xl xl:text-2xl leading-relaxed">
                   {"Udeti is a comprehensive clinic management solution designed to digitize standalone and small-scale clinics with ease. It seamlessly integrates with the Udeti developed clinic website, ensuring improved patient visibility and engagement. With low or no infrastructure requirements, Udeti delivers the lowest-cost digital solution while providing the optionality of integrating with the ABDM ecosystem."}
                 </p>
-                <p className="text-xl py-6">
+                <p className="text-base sm:text-lg lg:text-xl xl:text-2xl leading-relaxed">
                   {"The solution has also been selected by the National Health Authority (NHA) and the Governments of Tamil Nadu and Rajasthan, reaffirming its reliability, scalability, and alignment with India's digital health mission."}
                 </p>
               </div>
-              <Image
-                src="/images/udoti/about.jpg"
-                width={350}
-                height={350}
-                alt="About"
-                className="py-8"
-              />
             </div>
-            <div className="text-center pt-8 mt-8">
-              <p className="text-4xl">Transforming Healthcare by the Numbers</p>
-              <Metrics data={siteData.metrics} />
+
+            {/* Image */}
+            <div className="flex-shrink-0 order-1 lg:order-2">
+              <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 xl:w-[450px] xl:h-[450px] mx-auto">
+                <Image
+                  src="/images/udoti/about.jpg"
+                  fill
+                  alt="About Udeti"
+                  className="object-cover rounded-lg shadow-lg"
+                  sizes="(max-width: 640px) 256px, (max-width: 1024px) 320px, (max-width: 1280px) 384px, 450px"
+                />
+              </div>
             </div>
           </div>
-        }
+
+          {/* Metrics Section */}
+          {siteData.metrics &&
+            <div className="text-center">
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-8 sm:mb-12 lg:mb-16">
+                Transforming Healthcare by the Numbers
+              </h3>
+              <Metrics data={siteData.metrics} />
+            </div>
+          }
+        </div>
 
         {/* Testimonials */}
         {siteData.testimonials && <Testimonials data={siteData.testimonials} />}
