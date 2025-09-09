@@ -38,7 +38,7 @@ const MultiStepForm = ({ availableDoctors }: { availableDoctors: string[] }) => 
   const slotsToShow = useMemo(() => {
     if (!step.date) return [];
     return step.period === 'Morning' ? morningSlots : eveningSlots;
-  }, [step.date, step.period]);
+  }, [step.date, step.period, morningSlots, eveningSlots]);
 
   const handleUserDetailsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserDetails(prev => ({ ...prev, [e.target.name]: e.target.value }));

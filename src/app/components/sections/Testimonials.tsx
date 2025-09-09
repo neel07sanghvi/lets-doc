@@ -73,7 +73,7 @@ export default function Testimonials({ data }: TestimonialsProps) {
                 className="text-sm sm:text-base lg:text-lg italic leading-relaxed flex-grow mb-4 sm:mb-6"
                 style={{ color: 'var(--text-secondary-color)' }}
               >
-                "{testimonial.quote}"
+                {`"${testimonial.quote}"`}
               </p>
 
               {/* Author Info */}
