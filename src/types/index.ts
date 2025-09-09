@@ -56,11 +56,13 @@ export interface SiteData {
   header: {
     logoText: string;
     navLinks: NavLink[];
+    buttonNavLink?: NavLink
   };
   hero: {
     title: string;
     subtitle: string;
-    image: string;
+    images: string[];
+    hrefId?: string
   };
   metrics?: Metric[];
   services?: {

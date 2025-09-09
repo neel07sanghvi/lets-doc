@@ -2,61 +2,54 @@ import React from 'react';
 
 const whyUdetiFeatures = [
   {
-    icon: '🏥',
-    title: 'Complete Digital Solution',
-    description: 'End-to-end digitization of your clinic operations from appointment booking to patient records.'
+    bgColor: "blue",
+    description: 'My clinic lacks visibility on the internet, my Google Business profile is incomplete.'
   },
   {
-    icon: '📱',
-    title: 'Mobile-First Approach',
+    bgColor: "green",
     description: 'Access your clinic data anywhere, anytime with our mobile-responsive platform.'
   },
   {
-    icon: '💰',
-    title: 'Cost Effective',
+    bgColor: "orange",
     description: 'Affordable pricing plans that grow with your practice without breaking the bank.'
   },
   {
-    icon: '⚡',
-    title: 'Easy Implementation',
+    bgColor: "violet",
     description: 'Quick setup process with minimal disruption to your current operations.'
   },
   {
-    icon: '🔒',
-    title: 'Secure & Compliant',
+    bgColor: "tomato",
     description: 'Bank-level security with full compliance to healthcare data regulations.'
   },
   {
-    icon: '📊',
-    title: 'Analytics & Insights',
+    bgColor: "turquoise",
     description: 'Detailed reports and analytics to help you make informed business decisions.'
   }
 ];
 
 export default function WhyUdeti() {
   return (
-    <section className="py-16 md:py-24" style={{ backgroundColor: 'var(--background-color)' }}>
-      <div className="container mx-auto px-6">
+    <section id="why-udeti" className="py-16 md:py-24" style={{ backgroundColor: 'var(--background-color)' }}>
+      <div className="container mx-auto flex flex-col items-center content-center">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: 'var(--secondary-color)' }}>
             Why Udeti?
           </h2>
           <p className="text-lg max-w-2xl mx-auto" style={{ color: 'var(--text-secondary-color)' }}>
-            Transform your healthcare practice with our comprehensive digital solution designed specifically for Indian clinics.
+            Growing a practice in today's digital world comes with unique challenges
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-210">
           {whyUdetiFeatures.map((feature, index) => (
             <div
               key={index}
-              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
+              className="p-6 h-60 w-70 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex items-center content-center"
+              style={{
+                backgroundColor: feature.bgColor,
+              }}
             >
-              <div className="text-4xl mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-semibold mb-3" style={{ color: 'var(--secondary-color)' }}>
-                {feature.title}
-              </h3>
-              <p style={{ color: 'var(--text-secondary-color)' }}>
+              <p style={{ color: "white" }}>
                 {feature.description}
               </p>
             </div>

@@ -9,11 +9,12 @@ import Testimonials from "../components/sections/Testimonials";
 import Doctors from "../components/sections/Doctors";
 import Gallery from "../components/sections/Gallery";
 import BookingForm from "../components/sections/BookingForm";
-import Carousel from "../components/Carousel";
+import Carousel from "../components/raw/Carousel";
 import { Metadata } from "next";
 import WhyUdeti from "../components/sections/WhyUdeti";
 import UdetiPricing from "../components/sections/UdetiPricing";
 import ContactFormSection from "../components/sections/ContactForm";
+import Image from 'next/image';
 
 type ClinicPageProps = {
   params: {
@@ -63,14 +64,6 @@ export default function ClinicPage({ params }: ClinicPageProps) {
     '--text-secondary-color': siteData.theme.textSecondary,
   } as React.CSSProperties;
 
-  // Sample carousel images for Udeti (you can replace with actual images)
-  const udetiCarouselImages = [
-    '/images/udoti/carousel1.jpg',
-    '/images/udoti/carousel2.jpg',
-    '/images/udoti/carousel3.jpg',
-    '/images/udoti/carousel4.jpg'
-  ];
-
   // Render different layouts based on site type
   const renderUdetiLayout = () => (
     <>
@@ -79,17 +72,6 @@ export default function ClinicPage({ params }: ClinicPageProps) {
       <div style={{ backgroundColor: 'var(--background-color)', minHeight: '100vh' }}>
         {/* Hero Section */}
         <Hero data={siteData.hero} />
-
-        {/* Carousel Section */}
-        <section className="py-16 md:py-24" style={{ backgroundColor: 'var(--background-color)' }}>
-          <div className="container mx-auto px-6">
-            <Carousel
-              images={udetiCarouselImages}
-              title="The Udeti Solution in Action"
-              className="max-w-4xl mx-auto"
-            />
-          </div>
-        </section>
 
         {/* Why Udeti Section */}
         <WhyUdeti />
@@ -101,7 +83,32 @@ export default function ClinicPage({ params }: ClinicPageProps) {
         <ContactFormSection />
 
         {/* Metrics */}
-        {siteData.metrics && <Metrics data={siteData.metrics} />}
+        {siteData.metrics &&
+          <div id="about" className="container mx-auto px-6 py-12">
+            <div className="flex items-center">
+              <div>
+                <p className="text-3xl font-bold py-8">Transform Your Clinic with Udeti</p>
+                <p className="text-xl py-6">
+                  {"Udeti is a comprehensive clinic management solution designed to digitize standalone and small-scale clinics with ease. It seamlessly integrates with the Udeti developed clinic website, ensuring improved patient visibility and engagement. With low or no infrastructure requirements, Udeti delivers the lowest-cost digital solution while providing the optionality of integrating with the ABDM ecosystem."}
+                </p>
+                <p className="text-xl py-6">
+                  {"The solution has also been selected by the National Health Authority (NHA) and the Governments of Tamil Nadu and Rajasthan, reaffirming its reliability, scalability, and alignment with India's digital health mission."}
+                </p>
+              </div>
+              <Image
+                src="/images/udoti/about.jpg"
+                width={350}
+                height={350}
+                alt="About"
+                className="py-8"
+              />
+            </div>
+            <div className="text-center pt-8 mt-8">
+              <p className="text-4xl">Transforming Healthcare by the Numbers</p>
+              <Metrics data={siteData.metrics} />
+            </div>
+          </div>
+        }
 
         {/* Testimonials */}
         {siteData.testimonials && <Testimonials data={siteData.testimonials} />}
@@ -118,7 +125,7 @@ export default function ClinicPage({ params }: ClinicPageProps) {
       <div style={{ backgroundColor: 'var(--background-color)', minHeight: '100vh' }}>
         {/* Gallery Carousel */}
         {siteData.gallery && (
-          <section className="py-16 md:py-24" style={{ backgroundColor: 'var(--background-color)' }}>
+          <section id="clinic" className="py-16 md:py-24" style={{ backgroundColor: 'var(--background-color)' }}>
             <div className="container mx-auto px-6">
               <Carousel
                 images={siteData.gallery.images}
@@ -131,7 +138,7 @@ export default function ClinicPage({ params }: ClinicPageProps) {
 
         {/* Doctors Carousel */}
         {siteData.doctors && (
-          <section className="py-16 md:py-24 bg-slate-50">
+          <section id="doctors" className="py-16 md:py-24 bg-slate-50">
             <div className="container mx-auto px-6">
               <div className="text-center mb-12">
                 <h2 className="text-3xl md:text-4xl font-bold" style={{ color: 'var(--secondary-color)' }}>
@@ -158,7 +165,7 @@ export default function ClinicPage({ params }: ClinicPageProps) {
 
         {/* Services Carousel */}
         {siteData.services && (
-          <section className="py-16 md:py-24" style={{ backgroundColor: 'var(--background-color)' }}>
+          <section id="services" className="py-16 md:py-24" style={{ backgroundColor: 'var(--background-color)' }}>
             <div className="container mx-auto px-6">
               <div className="text-center mb-12">
                 <h2 className="text-3xl md:text-4xl font-bold" style={{ color: 'var(--secondary-color)' }}>

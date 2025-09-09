@@ -14,18 +14,18 @@ export const drAnuragData: SiteData = {
   header: {
     logoText: "Dr. Anurag's Dental Clinic",
     navLinks: [
-      { label: 'Home', href: '#' },
-      { label: 'Book Appointment', href: '#' },
-      { label: 'Doctors', href: '#' },
-      { label: 'Services', href: '#' },
-      { label: 'Testimonials', href: '#' },
-      { label: 'Contact', href: '#' },
-    ],
+      { label: 'Clinic', href: '#clinic' },
+      { label: 'Doctors', href: '#doctors' },
+      { label: 'Book Appointment', href: '#appointment' },
+      { label: 'Services', href: '#services' },
+      { label: 'Testimonials', href: '#testimonials' },
+      { label: 'Contact', href: '#contact' },
+    ]
   },
   hero: {
     title: 'Your Smile, Our Priority',
     subtitle: 'Established in 2003, Dr. Anurag\'s Dental Clinic has been serving the community with exceptional dental care, combining traditional values with modern technology.',
-    image: '/images/dr-anurag/doctor-hero.jpg',
+    images: ['/images/dr-anurag/doctor-hero.jpg'],
   },
   metrics: [
     { value: '20+', label: 'Years of Experience' },
@@ -40,7 +40,6 @@ export const drAnuragData: SiteData = {
       { title: 'Preventive Care', description: 'Regular cleanings...', features: ['Professional Cleaning', 'Oral Examinations', 'Fluoride Treatments'], image: '/images/dr-anurag/service1.jpg' },
       { title: 'Restorative Procedures', description: 'Expert restoration services...', features: ['Dental Fillings', 'Crowns & Bridges', 'Root Canal Treatment'], image: '/images/dr-anurag/service2.jpg' },
       { title: 'Cosmetic Treatments', description: 'Transform your smile with...', features: ['Teeth Whitening', 'Porcelain Veneers', 'Smile Makeover'], image: '/images/dr-anurag/service3.jpg' },
-      { title: 'Orthodontics', description: 'Straighten your teeth with...', features: ['Traditional Braces', 'Clear Aligners', 'Retainers'], image: '/images/dr-anurag/service4.jpg' }
     ],
   },
   gallery: {

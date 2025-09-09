@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+html {
+  scroll-behavior: smooth;
+}
+
 /* Theme color utilities */
 .text-primary {
   color: var(--primary-color) !important;

@@ -13,18 +13,18 @@ export const drAnishData: SiteData = {
   header: {
     logoText: "Dr. Anish's Dental Clinic",
     navLinks: [
-      { label: 'Home', href: '#' },
-      { label: 'Book Appointment', href: '#' },
-      { label: 'Our Doctors', href: '#' },
-      { label: 'Services', href: '#' },
-      { label: 'Testimonials', href: '#' },
-      { label: 'Contact', href: '#' },
+      { label: 'Clinic', href: '#clinic' },
+      { label: 'Doctors', href: '#doctors' },
+      { label: 'Book Appointment', href: '#appointment' },
+      { label: 'Services', href: '#services' },
+      { label: 'Testimonials', href: '#testimonials' },
+      { label: 'Contact', href: '#contact' },
     ],
   },
   hero: {
     title: 'Your Smile, Our Priority',
     subtitle: 'Established in 2003, Dr. Anish\'s Dental Clinic has been serving the community with exceptional dental care, combining traditional values with modern technology.',
-    image: '/images/dr-anish/doctor-hero.jpg',
+    images: ['/images/dr-anish/doctor-hero.jpg'],
   },
   metrics: [
     { value: '20+', label: 'Years of Experience' },
@@ -42,6 +42,15 @@ export const drAnishData: SiteData = {
       { title: 'Orthodontics', description: 'Straighten your teeth with...', features: ['Traditional Braces', 'Clear Aligners', 'Retainers'], image: '/images/dr-anish/service4.jpg' }
     ],
   },
+  gallery: {
+    title: 'Our Clinic in Pics',
+    images: [
+      '/images/dr-ankit/gallery1.jpg',
+      '/images/dr-ankit/gallery2.jpg',
+      '/images/dr-ankit/gallery3.jpg',
+      '/images/dr-ankit/gallery4.jpg',
+    ]
+  },
   doctors: {
     title: 'Meet Your Dentists',
     description: 'Our experienced team of dental professionals is committed to providing you with the highest quality care.',
@@ -54,6 +63,26 @@ export const drAnishData: SiteData = {
         image: '/images/dr-anish/doctor-profile.jpg'
       }
     ]
+  },
+  testimonials: {
+    title: 'What Our Patients Say',
+    items: [
+      {
+        quote: 'Dr. Ankit and his team provided exceptional care during my treatment. The entire process was comfortable and the staff made me feel at ease throughout. Highly recommend!',
+        authorName: 'Fatima Khan',
+        authorTitle: 'Teacher, 45',
+      },
+      {
+        quote: 'The teeth whitening treatment exceeded my expectations! Dr. Priya explained every step and the results were amazing. My confidence has improved significantly.',
+        authorName: 'Arjun Mehta',
+        authorTitle: 'Software Engineer, 32',
+      },
+      {
+        quote: 'After my health issues, I thought I\'d never feel confident again. The comprehensive care Dr. Ankit provided has given me back my confidence and quality of life. Excellent work!',
+        authorName: 'Ramesh Gupta',
+        authorTitle: 'Retired Government Officer, 68',
+      },
+    ],
   },
   bookingForm: {
     type: 'detailed',

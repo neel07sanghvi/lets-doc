@@ -335,7 +335,7 @@ export default function BookingForm({ data, siteName }: BookingFormProps) {
   if (data.type === 'none') return null;
 
   return (
-    <section className="bg-slate-50 py-16 md:py-24">
+    <section id="appointment" className="bg-slate-50 py-16 md:py-24">
       <div className="container mx-auto px-6">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold" style={{ color: 'var(--secondary-color)' }}>

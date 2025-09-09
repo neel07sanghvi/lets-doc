@@ -27,7 +27,7 @@ export default function Testimonials({ data }: TestimonialsProps) {
   }
 
   return (
-    <section className="bg-slate-50 py-16 md:py-24">
+    <section id="testimonials" className="bg-slate-50 py-16 md:py-24">
       <div className="container mx-auto px-6">
         {/* Section Header */}
         <div className="text-center mb-12">

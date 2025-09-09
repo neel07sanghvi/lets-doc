@@ -16,15 +16,20 @@ export const udotiData: SiteData = {
       { label: 'Solution', href: '#solution' },
       { label: 'Why Udeti', href: '#why-udeti' },
       { label: 'Pricing', href: '#pricing' },
-      { label: 'Contact Us', href: '#contact' },
+      { label: 'Contact Us', href: '#contact-us' },
       { label: 'About Us', href: '#about' },
       { label: 'Testimonials', href: '#testimonials' },
     ],
+    buttonNavLink: {
+      label: "Request Demo",
+      href: "#contact-us"
+    }
   },
   hero: {
-    title: 'Comprehensive digital transformation for your healthcare practice',
-    subtitle: 'The Udeti Solution',
-    image: '/images/udoti/hero.jpg',
+    title: 'The Udeti Solution',
+    subtitle: 'Comprehensive digital transformation for your healthcare practice',
+    images: ['/images/udoti/hero-carousel.jpg', '/images/udoti/hero-carousel2.jpg'],
+    hrefId: "solution"
   },
   metrics: [
     { value: '20%-40%', label: 'Revenue Growth for Clinics' },

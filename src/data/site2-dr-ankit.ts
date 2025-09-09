@@ -14,18 +14,18 @@ export const drAnkitData: SiteData = {
   header: {
     logoText: 'Dr. Ankit Clinic',
     navLinks: [
-      { label: 'Clinic', href: '#' },
-      { label: 'Doctors', href: '#' },
-      { label: 'Book Appointment', href: '#' },
-      { label: 'Services', href: '#' },
-      { label: 'Testimonials', href: '#' },
-      { label: 'Contact', href: '#' },
-    ],
+      { label: 'Clinic', href: '#clinic' },
+      { label: 'Doctors', href: '#doctors' },
+      { label: 'Book Appointment', href: '#appointment' },
+      { label: 'Services', href: '#services' },
+      { label: 'Testimonials', href: '#testimonials' },
+      { label: 'Contact', href: '#contact' },
+    ]
   },
-  hero: { // This site doesn't have a traditional hero, so we'll keep it minimal
+  hero: {
     title: "Book Your Appointment",
     subtitle: "Select a doctor to begin.",
-    image: "", // No main hero image
+    images: [],
   },
   metrics: [
     { value: '22+', label: 'Years of Experience' },

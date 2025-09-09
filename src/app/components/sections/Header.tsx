@@ -21,8 +21,8 @@ export default function Header({ data }: HeaderProps) {
           ))}
         </div>
 
-        <a href="#" className="hidden md:block px-6 py-2.5 rounded-lg text-white font-semibold transition-transform hover:scale-105 bg-primary shadow-sm">
-          Book Appointment
+        <a href={data.buttonNavLink?.href || "#appointment"} className="hidden md:block px-6 py-2.5 rounded-lg text-white font-semibold transition-transform hover:scale-105 bg-primary shadow-sm">
+          {data.buttonNavLink?.label || "Book Appointment"}
         </a>
 
         <div className="md:hidden">

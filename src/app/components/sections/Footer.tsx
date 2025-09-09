@@ -8,7 +8,7 @@ type FooterProps = {
 
 export default function Footer({ data, siteName }: FooterProps) {
   return (
-    <footer className="bg-secondary text-white">
+    <footer id="contact" className="bg-secondary text-white">
       <div className="container mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-10">
         <div>
           <h3 className="text-2xl font-bold mb-4">{siteName}</h3>

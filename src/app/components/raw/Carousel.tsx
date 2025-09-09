@@ -65,12 +65,11 @@ export default function Carousel({
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
           {images.map((image, index) => (
-            <div key={index} className="w-full flex-shrink-0 relative h-64 md:h-80 lg:h-96">
+            <div key={index} className="w-full flex-shrink-0 relative h-50 md:h-80 lg:h-96">
               <Image
                 src={image}
-                alt={`Slide ${index + 1}`}
                 fill
-                className="object-cover"
+                alt={`Slide ${index + 1}`}
                 priority={index === 0}
               />
             </div>
@@ -109,8 +108,8 @@ export default function Carousel({
                 key={index}
                 onClick={() => goToSlide(index)}
                 className={`w-3 h-3 rounded-full transition-all duration-200 ${index === currentIndex
-                    ? 'bg-white scale-110'
-                    : 'bg-white/50 hover:bg-white/75'
+                  ? 'bg-white scale-110'
+                  : 'bg-white/50 hover:bg-white/75'
                   }`}
                 aria-label={`Go to slide ${index + 1}`}
               />
