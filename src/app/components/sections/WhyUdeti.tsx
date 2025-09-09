@@ -33,10 +33,10 @@ export default function WhyUdeti() {
       <div className="container mx-auto flex flex-col items-center content-center">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: 'var(--secondary-color)' }}>
-            Why Udeti?
+            {"Why Udeti?"}
           </h2>
           <p className="text-lg max-w-2xl mx-auto" style={{ color: 'var(--text-secondary-color)' }}>
-            Growing a practice in today's digital world comes with unique challenges
+            {"Growing a practice in today's digital world comes with unique challenges"}
           </p>
         </div>
 

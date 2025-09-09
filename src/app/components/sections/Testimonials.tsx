@@ -45,7 +45,7 @@ export default function Testimonials({ data }: TestimonialsProps) {
               </div>
               <QuoteIcon />
               <p className="text-text-secondary my-4 flex-grow italic">
-                "{testimonial.quote}"
+                {testimonial.quote}
               </p>
               <div className="mt-auto pt-4 border-t border-slate-200">
                 <p className="font-bold text-secondary">{testimonial.authorName}</p>

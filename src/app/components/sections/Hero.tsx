@@ -1,7 +1,6 @@
 // src/components/sections/Hero.tsx
 
 import { SiteData } from "@/types";
-import Image from "next/image";
 import Carousel from "../raw/Carousel";
 
 type HeroProps = {

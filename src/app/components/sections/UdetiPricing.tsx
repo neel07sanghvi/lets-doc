@@ -105,7 +105,7 @@ export default function UdetiPricing() {
             Choose Your Plan
           </h2>
           <p className="text-lg mb-8" style={{ color: 'var(--text-secondary-color)' }}>
-            Select the perfect plan for your clinic's needs. Upgrade or downgrade anytime.
+            {"Select the perfect plan for your clinic's needs. Upgrade or downgrade anytime."}
           </p>
 
           {/* Billing Toggle */}
